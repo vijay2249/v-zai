@@ -2,7 +2,7 @@
   "name": "v-zai-extension",
   "displayName": "v-zai-extension",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.54.0"
   },
