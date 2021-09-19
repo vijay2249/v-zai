@@ -1,8 +1,9 @@
 {
   "name": "v-zai-extension",
   "displayName": "v-zai-extension",
+  "publisher": "v-zai",
   "description": "",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.54.0"
   },
@@ -18,10 +19,6 @@
       {
         "command": "v-zai-extension.v-zai",
         "title": "v-zai"
-      },
-      {
-        "command": "v-zai-extension.wds",
-        "title": "wds"
       }
     ]
   },
