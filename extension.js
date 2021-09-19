@@ -6,24 +6,32 @@ const xmlParse = require('fast-xml-parser');
  * @param {vscode.ExtensionContext} context
  */
 async function activate(context) {
+	let web_sites = ["https://blog.webdevsimplified.com/rss.xml", "https://blog.codepen.io/feed/", "https://tympanus.net/codrops/category/articles/feed/"]
 	let web_dev_articles = []
-	const wds_blogs = await axios.get("https://blog.webdevsimplified.com/rss.xml");
-	xmlParse.parse(wds_blogs.data).rss.channel.item.map(article => {
-		return web_dev_articles.push({
-			label: article.title,
-			detail: article.description,
-			link: article.link,
-		})
-	})
-	const codePen_blogs = await axios.get("https://blog.codepen.io/feed/");
-	xmlParse.parse(codePen_blogs.data).rss.channel.item.map(article =>{
-		return web_dev_articles.push({
+	// web_sites.map(item =>async () =>{
+	// 	const article = await axios.get(item)
+	// 	xmlParse.parse(article.data).rss.channel.item.map( art =>{
+	// 		return web_dev_articles.push({
+	// 			label: art.title,
+	// 			detail: art.description,
+	// 			link: art.link
+	// 		})
+	// 	})
+	// })
+	const push = (article) =>{
+		web_dev_articles.push({
 			label: article.title,
 			detail: article.description,
 			link: article.link
-		}) 
-	})
-	console.log(web_dev_articles[0])
+		})
+	}
+	const wds_blogs = await axios.get("https://blog.webdevsimplified.com/rss.xml");
+	xmlParse.parse(wds_blogs.data).rss.channel.item.map(article => push(article))
+	const codePen_blogs = await axios.get("https://blog.codepen.io/feed/");
+	xmlParse.parse(codePen_blogs.data).rss.channel.item.map(article => push(article))
+	const coDrops_articles = await axios.get("https://tympanus.net/codrops/category/articles/feed/")
+	xmlParse.parse(coDrops_articles.data).rss.channel.item.map(article => push(article))
+	console.log(web_dev_articles)
 	console.log('Congratulations, "v-zai-extension" is now active!');
 	let disposable = vscode.commands.registerCommand('v-zai-extension.v-zai', async () => {
 		var time = new Date()
